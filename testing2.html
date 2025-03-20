@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!-- Favicon icon -->
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon.png">
+    <title>SENTINEL HIRARC</title>
+    <!-- Custom CSS -->
+    <link href="assets/extra-libs/c3/c3.min.css" rel="stylesheet">
+    <link href="assets/libs/chartist/dist/chartist.min.css" rel="stylesheet">
+    <link href="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.css" rel="stylesheet" />
+    <!-- Custom CSS -->
+    <link href="dist/css/style.min.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet"
+        type="text/css" />
+
+    <!--Trumbowgy CSS -->
+    <link rel="stylesheet" href="./libs/trumbowyg/dist/ui/trumbowyg.min.css">
+    <link rel="stylesheet" href="./libs/trumbowyg/dist/plugins/table/ui/trumbowyg.table.min.css">
+    <link rel="stylesheet" href="./libs/trumbowyg/dist/plugins/colors/ui/trumbowyg.colors.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        :root {
+            --sw-border-color: #eeeeee;
+            --sw-toolbar-btn-color: #ffffff;
+            --sw-toolbar-btn-background-color: rgb(95, 118, 232);
+            --sw-anchor-default-primary-color: #f8f9fa;
+            --sw-anchor-default-secondary-color: #b0b0b1;
+            --sw-anchor-active-primary-color: rgb(95, 118, 232);
+            --sw-anchor-active-secondary-color: #ffffff;
+            --sw-anchor-done-primary-color: rgb(180, 193, 255);
+            --sw-anchor-done-secondary-color: #fefefe;
+            --sw-anchor-disabled-primary-color: #f8f9fa;
+            --sw-anchor-disabled-secondary-color: #dbe0e5;
+            --sw-anchor-error-primary-color: #dc3545;
+            --sw-anchor-error-secondary-color: #ffffff;
+            --sw-anchor-warning-primary-color: #ffc107;
+            --sw-anchor-warning-secondary-color: #ffffff;
+            --sw-progress-color: rgb(95, 118, 232);
+            --sw-progress-background-color: #f8f9fa;
+            --sw-loader-color: rgb(95, 118, 232);
+            --sw-loader-background-color: #f8f9fa;
+            --sw-loader-background-wrapper-color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+
+    <style>
+        /* Style the overlay */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Style the form */
+        .popout-form {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-check-input {
+            margin-left: 8px;
+        }
+
+        #button {
+            margin-top: 20px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 45px;
+            height: 25px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 17px;
+            width: 17px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+        input:checked+.slider {
+            background-color: rgb(95, 118, 232);
+        }
+
+        input:focus+.slider {
+            box-shadow: 0 0 1px rgb(95, 118, 232);
+        }
+
+        input:checked+.slider:before {
+            -webkit-transform: translateX(20px);
+            -ms-transform: translateX(20px);
+            transform: translateX(20px);
+        }
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        .password-container {
+            position: relative;
+        }
+
+        #togglePassword1,
+        #togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 25px;
+            /* Adjust the right position based on your preference */
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
+    <!-- Select2 CDN
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/js/select2.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.7/css/select2.min.css" rel="stylesheet" />
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script> -->
+</head>
+
+<body>
+    <!-- ============================================================== -->
+    <!-- Preloader - style you can find in spinners.css -->
+    <!-- ============================================================== -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- Main wrapper - style you can find in pages.scss -->
+    <!-- ============================================================== -->
+    <div id="main-wrapper" data-theme="light" data-layout="vertical" data-navbarbg="skin6" data-sidebartype="full"
+        data-sidebar-position="fixed" data-header-position="fixed" data-boxed-layout="full">
+        <!-- ============================================================== -->
+        <!-- Topbar header - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <header class="topbar" data-navbarbg="skin6">
+            <nav class="navbar top-navbar navbar-expand-md">
+                <div class="navbar-header" data-logobg="skin6">
+                    <!-- This is for the sidebar toggle which is visible on mobile only -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)"><i
+                            class="ti-menu ti-close"></i></a>
+                    <!-- ============================================================== -->
+                    <!-- Logo -->
+                    <!-- ============================================================== -->
+                    <div class="navbar-brand">
+                        <!-- Logo icon -->
+                        <a href="index.html">
+                            <b class="logo-icon">
+                                <!-- Dark Logo icon -->
+                                <img src="assets/images/logo-icon.png" alt="homepage" class="dark-logo" width="50" />
+                                <!-- Light Logo icon -->
+                                <img src="assets/images/logo-icon.png" alt="homepage" class="light-logo" width="50" />
+                            </b>
+                            <!--End Logo icon -->
+                            <!-- Logo text -->
+                            <span class="logo-text">
+                                <!-- dark Logo text -->
+                                <img src="assets/images/logo-text.png" alt="homepage" class="dark-logo" width="150" />
+                                <!-- Light Logo text -->
+                                <img src="assets/images/logo-light-text.png" class="light-logo" alt="homepage"
+                                    width="150" />
+                            </span>
+                        </a>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End Logo -->
+                    <!-- ============================================================== -->
+                    <!-- ============================================================== -->
+                    <!-- Toggle which is visible on mobile only -->
+                    <!-- ============================================================== -->
+                    <a class="topbartoggler d-block d-md-none waves-effect waves-light" href="javascript:void(0)"
+                        data-toggle="collapse" data-target="#navbarSupportedContent"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><i
+                            class="ti-more"></i></a>
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Logo -->
+                <!-- ============================================================== -->
+                <div class="navbar-collapse collapse" id="navbarSupportedContent">
+                    <!-- ============================================================== -->
+                    <!-- toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-left mr-auto ml-3 pl-1">
+
+
+                    </ul>
+                    <!-- ============================================================== -->
+                    <!-- Right side toggle and nav items -->
+                    <!-- ============================================================== -->
+                    <ul class="navbar-nav float-right">
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="javascript:void(0)" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <img src="assets/images/users/profile-pic.jpg" alt="user" class="rounded-circle"
+                                    width="40">
+                                <span class="ml-2 d-none d-lg-inline-block"><span>Hello,</span> <span
+                                        class="text-dark">Jason Doe</span> <i data-feather="chevron-down"
+                                        class="svg-icon"></i></span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right user-dd animated flipInY">
+                                <a class="dropdown-item" href="javascript:void(0)"><i data-feather="power"
+                                        class="svg-icon mr-2 ml-1"></i>
+                                    Logout</a>
+                            </div>
+                        </li>
+                        <!-- ============================================================== -->
+                        <!-- User profile and search -->
+                        <!-- ============================================================== -->
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- ============================================================== -->
+        <!-- End Topbar header -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <!-- Sidebar scroll-->
+            <div class="scroll-sidebar" data-sidebarbg="skin6">
+                <!-- Sidebar navigation-->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <ul id="sidebarnav">
+                            <li class="sidebar-item"> <a class="sidebar-link sidebar-link" href="dashboard.jsp"
+                                    aria-expanded="false"><i data-feather="home" class="feather-icon"></i><span
+                                        class="hide-menu">
+                                        <%= Translator.INSTANCE.translate("DASHBOARD_TTL", languageCd)%>
+                                    </span></a></li>
+
+                            <li class="list-divider"></li>
+
+                            <li class="nav-small-cap"><span class="hide-menu">Letter Maintenance</span></li>
+
+                            <li class="sidebar-item"> <a class="sidebar-link" href="testing1.html"
+                                    aria-expanded="false"><i class="fas fa-envelope"></i><span class="hide-menu">
+                                        Letter Template Maintenance
+                                    </span></a>
+
+                            <li class="sidebar-item superadmin"> <a class="sidebar-link" href="testing2.html"
+                                    aria-expanded="false"><i class="fas fa-cogs"></i><span class="hide-menu">
+                                        Letter Generation
+                                    </span></a>
+
+                            <li class="sidebar-item superadmin"> <a class="sidebar-link" href="testing3.html"
+                                    aria-expanded="false"><i class="fas fa-database"></i><span class="hide-menu">
+                                        Database Information Management
+                                    </span></a>
+
+                            <li class="sidebar-item superadmin"> <a class="sidebar-link" href="testing4.html"
+                                    aria-expanded="false"><i class="fas fa-search"></i><span class="hide-menu">
+                                        Search Letter Template
+                                    </span></a>
+
+                            <li class="list-divider"></li>
+
+                            <li class="nav-small-cap"><span class="hide-menu">
+                                    <%= Translator.INSTANCE.translate("MAINT_MENU", languageCd)%>
+                                </span></li>
+
+                            <li class="sidebar-item superadmin"> <a class="sidebar-link" href="company_maint.jsp"
+                                    aria-expanded="false"><i class="far fa-building"></i><span class="hide-menu">
+                                        <%= Translator.INSTANCE.translate("CPY_CRUD_TITLE", languageCd)%>
+                                    </span></a>
+                            <li class="sidebar-item superadmin"> <a class="sidebar-link" href="user_maint.jsp"
+                                    aria-expanded="false"><i class="far fa-address-book"></i><span class="hide-menu">
+                                        <%= Translator.INSTANCE.translate("MAINT_USR_MENU", languageCd)%>
+                                    </span></a>
+                        </ul>
+                    </ul>
+                </nav>
+                <!-- End Sidebar navigation -->
+            </div>
+            <!-- End Sidebar scroll-->
+        </aside>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar - style you can find in sidebar.scss  -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page wrapper  -->
+        <!-- ============================================================== -->
+        <div class="page-wrapper position-relative">
+            <div class="col-lg-12 col-md-7 ">
+                <div class="card">
+                    <div class="card-body">
+
+                        <h3 class="card-title mb-3  text-primary">
+                            Letter Generation
+                        </h3>
+
+                        <!-- SmartWizard html -->
+                        <div id="smartwizard">
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#step-1">
+                                        <div class="num">1</div>
+                                        Select Data Classification
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#step-2">
+                                        <span class="num">2</span>
+                                        Select Data Field
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#step-3">
+                                        <span class="num">3</span>
+                                        Select Letter Template
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#step-4">
+                                        <span class="num">4</span>
+                                        Review Letter
+                                    </a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 row ">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-10">
+                                                        <label for="select_category" class="font-weight-bold">
+                                                            Categories:
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <select class="select_category" style="width:100%;"
+                                                            id="select_category">
+                                                            <option value="">Select an Option</option>
+                                                            <option value="Government">Government</option>
+                                                            <option value="Agensi">Agensi</option>
+                                                            <option value="Private Sector">Private Sector</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                                    <h3 class="mb-3 mt-3 font-weight-bold">
+                                        Data Field
+                                    </h3>
+                                    <br>
+                                    <div class="table-responsive">
+                                        <div id="multi_col_order_wrapper"
+                                            class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-6">
+                                                </div>
+                                                <div class="col-lg-4 col-md-12 mb-4">
+                                                </div>
+                                                <div class="col-lg-2 col-md-12 mb-4 mt-1" id="button">
+                                                    <button type="submit" onclick="javascript:viewDataField()"
+                                                        class="btn btn-rounded btn-secondary pl-3 pr-3"
+                                                        data-toggle="modal" data-target="#viewData" id="view_data_btn"
+                                                        disabled>
+                                                        <i class="fas fa-edit"></i>
+                                                        View
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <table id="myTable"
+                                                        class="table table-striped table-bordered display no-wrap dataTable no-footer"
+                                                        style="width: 100%;" role="grid"
+                                                        aria-describedby="multi_col_order_info">
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 row ">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group col-lg-12">
+                                                <div class="row">
+                                                    <div class="col-lg-10">
+                                                        <label for="select_letter_temp" class="font-weight-bold">
+                                                            Letter Template:
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <select class="select_letter_temp" style="width:100%;"
+                                                            id="select_letter_temp">
+                                                            <option value="">Select an Option</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 row ">
+                                        <div class="col-lg-12 col-md-12 col-sm-12">
+                                            <div class="form-group col-lg-12">
+                                                <div class="container p-0 shadow">
+                                                    <div id="editor" style="height: 500px;">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Include optional progressbar HTML -->
+                            <div class="progress">
+                                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0"
+                                    aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Page wrapper  -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- End Wrapper -->
+    <!-- ============================================================== -->
+    <!-- All Jquery -->
+    <!-- ============================================================== -->
+    <script src="assets/libs/jquery/dist/jquery.min.js"></script>
+    <script src="assets/libs/popper.js/dist/umd/popper.min.js"></script>
+    <script src="assets/libs/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- apps -->
+    <!-- apps -->
+    <script src="dist/js/app-style-switcher.js"></script>
+    <script src="dist/js/feather.min.js"></script>
+    <script src="assets/libs/perfect-scrollbar/dist/perfect-scrollbar.jquery.min.js"></script>
+    <script src="dist/js/sidebarmenu.js"></script>
+    <!--Custom JavaScript -->
+    <script src="dist/js/custom.min.js"></script>
+    <!--This page JavaScript -->
+    <script src="assets/extra-libs/c3/d3.min.js"></script>
+    <script src="assets/extra-libs/c3/c3.min.js"></script>
+    <script src="assets/libs/chartist/dist/chartist.min.js"></script>
+    <script src="assets/libs/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.min.js"></script>
+    <script src="assets/extra-libs/jvector/jquery-jvectormap-2.0.2.min.js"></script>
+    <script src="assets/extra-libs/jvector/jquery-jvectormap-world-mill-en.js"></script>
+    <script src="dist/js/pages/dashboards/dashboard1.min.js"></script>
+    <!--DataTables-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- SmartWizard -->
+    <script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js"
+        type="text/javascript"></script>
+    <!--Trumbowgy -->
+    <script src="./libs/trumbowyg/dist/trumbowyg.min.js"></script>
+    <script src="./libs/trumbowyg/dist/plugins/table/trumbowyg.table.min.js"></script>
+    <script src="./libs/trumbowyg/dist/plugins/colors/trumbowyg.colors.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.8/mammoth.browser.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#myTabs a.nav-link').on('click', function (e) {
+                e.preventDefault();
+                $(this).tab('show');
+            });
+            $("#username").text(session.get("username", ""));
+
+            if (session.get("X-AUTH-TOKEN", null) === null)
+                window.location.replace('<%= MiscUtility.getServerIP()%>' + '/panel/index.jsp');
+            var auth = session.get("auth", null);
+            if (auth !== null) {
+                if (auth !== "S")
+                    $(".superadmin").addClass("d-none")
+            }
+        });
+
+        $(function () {
+            // SmartWizard initialize
+            $('#smartwizard').smartWizard({
+                theme: 'arrows', // theme for the wizard, related css need to include for other than default theme
+                justified: true, // Nav menu justification. true/false
+                transition: {
+                    animation: 'slideHorizontal'// Effect on navigation, none|fade|slideHorizontal|slideVertical|slideSwing|css(Animation CSS class also need to specify)
+                }
+            });
+            $('#smartwizard').smartWizard({
+                keyboard: {
+                    keyNavigation: true, // Enable/Disable keyboard navigation(left and right keys are used if enabled)
+                    keyLeft: [37], // Left key code
+                    keyRight: [39] // Right key code
+                }
+            });
+            // Check if the page is refreshed
+            if (performance.navigation.type === 1) {
+                // Page is refreshed, reset the wizard to the first step
+                $('#smartwizard').smartWizard('reset');
+            }
+
+            // Event handler for step change
+            $('#smartwizard').on('leaveStep', function (e, anchorObject, stepNumber, stepDirection) {
+                // Save the current step to sessionStorage
+                sessionStorage.setItem('smartWizardStep', stepNumber);
+            });
+
+            // Event handler for screen refresh
+            $(window).on('beforeunload', function () {
+                // Clear the saved step when the page is refreshed
+                sessionStorage.removeItem('smartWizardStep');
+            });
+        });
+
+        $(document).ready(function () {
+            $(".select_category").select2();
+        });
+
+        $(document).ready(function () {
+            $(".select_letter_temp").select2();
+        });
+
+        $('#editor').trumbowyg({
+            btns: [
+                ['viewHTML'],
+                ['undo', 'redo'], // Only supported in Blink browsers
+                ['formatting'],
+                ['foreColor', 'backColor'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['link'],
+                ['insertImage'],
+                ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat'],
+                ['table', 'tableCellBackgroundColor', 'tableBorderColor', 'tableOthers'],
+                ['fullscreen']
+            ],
+            plugins: {
+                table: {
+                }
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+        document.addEventListener("DOMContentLoaded", function () {
+
+            var selectedCheckbox = null;
+            var checkboxCounter = 0;
+
+            function createTableRows() {
+                var table = $('#myTable').DataTable();
+
+                // Clear existing rows
+                table.clear();
+
+                data.forEach(function (row) {
+                    var rowData = [];
+
+                    // Add a checkbox column with the event listener
+                    var checkbox = document.createElement("input");
+                    checkbox.type = "checkbox";
+                    checkbox.className = "form-check-input";
+                    checkbox.name = "checkboxGroup";
+                    checkbox.id = "checkbox_" + checkboxCounter++;
+                    checkbox.addEventListener("change", function () {
+                        handleCheckboxSelection(this);
+                    });
+                    rowData.push(checkbox.outerHTML);
+
+                    // Add other columns
+                    for (var key in row) {
+                        if (row.hasOwnProperty(key)) {
+                            var td = document.createElement("td");
+                            td.appendChild(document.createTextNode(row[key]));
+                            rowData.push(td.outerHTML);
+                        }
+                    }
+
+                    // Add a delete button column
+                    var deleteButton = document.createElement("button");
+                    deleteButton.type = "button";
+                    deleteButton.className = "btn btn-danger btn-rounded delete-btn";
+                    deleteButton.innerHTML = '<i class="fa fa-times"></i> Delete';
+                    deleteButton.setAttribute('data-temp-id', row.companyId); // Set companyId in data attribute
+
+                    var tdButton = document.createElement("td");
+                    tdButton.appendChild(deleteButton);
+                    rowData.push(tdButton.outerHTML);
+
+                    // Add the row data to the DataTable
+                    var addedRow = table.row.add(rowData).draw().node();
+
+                    // Set up event delegation for the delete button in the added row
+                    $(addedRow).on('click', '.delete-btn', function () {
+                        var companyId = $(this).data('temp-id');
+                        deleteCompany(companyId);
+                        deleteRow(table.row($(this).closest('tr')).node());
+                    });
+                });
+
+                // Set up event delegation for checkboxes
+                $('#myTable tbody').on('change', 'input[name="checkboxGroup"]', function () {
+                    handleCheckboxSelection(this);
+                });
+            }
+
+            function handleCheckboxSelection(checkbox) {
+                if (selectedCheckbox && selectedCheckbox !== checkbox) {
+                    selectedCheckbox.checked = false;
+                }
+                selectedCheckbox = checkbox;
+
+                // Enable/disable "Kemaskini" button based on checkbox selection
+                var modifyUserBtn = document.getElementById("view_data_btn");
+                if (checkbox.checked) {
+                    modifyUserBtn.removeAttribute("disabled");
+
+                    var userId = checkbox.parentNode.nextSibling.textContent;
+                    document.getElementById("get_company_Id").textContent = userId;
+                } else {
+                    modifyUserBtn.setAttribute("disabled", true);
+                    document.getElementById("user_Id").textContent = " ";
+                }
+            }
+
+            function deleteRow(row) {
+                var table = $('#myTable').DataTable();
+                // Get the DataTable row index
+                var rowIndex = table.row(row).index();
+                // Remove the row from DataTable
+                table.row(rowIndex).remove().draw();
+                // updatePagination();
+            }
+
+            var table = document.getElementById("myTable");
+            var thead = table.createTHead();
+            var headerRow = thead.insertRow();
+            ["", 'ID', 'Holding Name', 'Company Name', 'Person Name', 'Person Title', ""].forEach(function (header) {
+                var th = document.createElement("th");
+                th.appendChild(document.createTextNode(header));
+                headerRow.appendChild(th);
+            });
+
+            let data = [];
+            $(document).ready(function () {
+                // Initialize Select2
+                $("#select_category").select2();
+
+                // Attach an event listener to the change event
+                $("#select_category").on("change", function () {
+                    // Get the selected value using Select2 API
+                    var selectedValue = $(this).val();
+
+                    // Set the selected value to the selectedCategory variable
+                    selectedCategory = selectedValue;
+
+                    // You can use the selectedCategory variable as needed
+                    console.log("Selected Category: ", selectedCategory);
+
+                    // Call your dataFieldTable function if needed
+                    dataFieldTable(selectedCategory);
+                });
+            });
+            function dataFieldTable(selectedCategory) {
+                var selectedCategory = selectedCategory;
+                if (selectedCategory == "Government") {
+                    data = [["1", "B1", "C1", "D1", "E1"],
+                    ["1", "B2", "C2", "D2", "E2"],
+                    ["1", "B3", "C3", "D3", "E3"],
+                    ["1", "B4", "C4", "D4", "E4"],
+                    ["1", "B5", "C5", "D5", "E5"],
+                    ["1", "B6", "C6", "D6", "E6"]];
+                    createTableRows();
+                } else if (selectedCategory == "Agensi") {
+                    data = [["2", "B1", "C1", "D1", "E1"],
+                    ["2", "B2", "C2", "D2", "E2"],
+                    ["2", "B3", "C3", "D3", "E3"],
+                    ["2", "B4", "C4", "D4", "E4"],
+                    ["2", "B5", "C5", "D5", "E5"],
+                    ["2", "B6", "C6", "D6", "E6"]];
+                    createTableRows();
+                } else if (selectedCategory == "Private Sector") {
+                    data = [["3", "B1", "C1", "D1", "E1"],
+                    ["3", "B2", "C2", "D2", "E2"],
+                    ["3", "B3", "C3", "D3", "E3"],
+                    ["3", "B4", "C4", "D4", "E4"],
+                    ["3", "B5", "C5", "D5", "E5"],
+                    ["3", "B6", "C6", "D6", "E6"]];
+                    createTableRows();
+                } else if (selectedCategory == "") {
+                    data = [];
+                    createTableRows();
+                }
+            }
+
+            createTableRows();
+        });
+    </script>
+    <script>
+        function viewDataField() {
+
+        }
+    </script>
+</body>
+
+</html>
