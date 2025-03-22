@@ -144,7 +144,7 @@
         function checkSolution() {
             let tiles = document.querySelectorAll("#board img");
             for (let i = 0; i < tiles.length; i++) {
-                let expectedSrc = "images/" + (i + 1) + ".jpg";
+                let expectedSrc = "images/c3/" + (i + 1) + ".jpg";
                 if (!tiles[i].src.includes(expectedSrc)) {
                     alert("Try Again!");
                     return;
