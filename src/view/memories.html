@@ -26,7 +26,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('images/c3/full.webp') no-repeat center center/cover;
+            background: url('../../resources/images/memories/c3/full.webp') no-repeat center center/cover;
             filter: blur(8px);
             z-index: -1;
         }
@@ -147,7 +147,7 @@
             for (let row = 0; row < gridSize; row++) {
                 for (let col = 0; col < gridSize; col++) {
                     let tile = document.createElement("img");
-                    tile.src = "images/blank.jpg";
+                    tile.src = "../../resources/images/memories/blank.jpg";
                     addDragEvents(tile);
                     document.getElementById("board").append(tile);
                 }
@@ -160,7 +160,7 @@
 
             pieces.forEach(piece => {
                 let tile = document.createElement("img");
-                tile.src = `images/c3/${piece}.jpg`;
+                tile.src = `../../resources/images/memories/c3/${piece}.jpg`;
                 addDragEvents(tile);
                 document.getElementById("pieces").append(tile);
             });
@@ -191,7 +191,7 @@
         function checkSolution() {
             let tiles = document.querySelectorAll("#board img");
             for (let i = 0; i < tiles.length; i++) {
-                let expectedSrc = "images/c3/" + (i + 1) + ".jpg";
+                let expectedSrc = "../../resources/images/memories/c3/" + (i + 1) + ".jpg";
                 if (!tiles[i].src.includes(expectedSrc)) {
                     alert("Try Again!");
                     return;
